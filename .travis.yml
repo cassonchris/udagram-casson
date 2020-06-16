@@ -19,9 +19,12 @@ before_script:
 
 script:
   - docker --version # print the version for logging
-  - docker build -t udacity-c3-restapi-feed .
-  - docker tag udacity-c3-restapi-feed cassonchris/udacity-c3-restapi-feed:latest
+  - docker build -t udagram-casson-api-feed udagram-casson-api-feed
+  - docker tag udagram-casson-api-feed cassonchris/udagram-casson-api-feed:latest
+  - docker build -t udagram-casson-api-user udagram-casson-api-user
+  - docker tag udagram-casson-api-user cassonchris/udagram-casson-api-user:latest
 
 after_success:
   - echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
-  - docker push cassonchris/udacity-c3-restapi-feed
+  - docker push cassonchris/udagram-casson-api-feed
+  - docker push cassonchris/udagram-casson-api-user
