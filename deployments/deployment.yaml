@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-casson-dev
+  labels:
+    app: udagram-casson-dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: udagram-casson-dev
+  template:
+    metadata:
+      labels:
+        app: udagram-casson-dev
+    spec:
+      containers:
+      - name: udacity-c3-restapi-user
+        image: cassonchris/udacity-c3-restapi-user
+        ports:
+        - containerPort: 80
