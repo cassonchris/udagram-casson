@@ -15,7 +15,11 @@ spec:
         app: udagram-casson-dev
     spec:
       containers:
-      - name: udacity-c3-restapi-user
-        image: cassonchris/udacity-c3-restapi-user
-        ports:
-        - containerPort: 80
+        - name: udagram-casson-api-feed
+          image: cassonchris/udagram-casson-api-feed
+          ports:
+          - containerPort: 80
+        - name: udagram-casson-api-user
+          image: cassonchris/udagram-casson-api-user
+          ports:
+          - containerPort: 81
