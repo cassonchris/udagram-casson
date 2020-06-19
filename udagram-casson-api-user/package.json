@@ -1,5 +1,5 @@
 {
-  "name": "udagram-casson-user-api",
+  "name": "udagram-casson-api-user",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",

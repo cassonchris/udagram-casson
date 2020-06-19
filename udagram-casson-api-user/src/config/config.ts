@@ -1,24 +1,31 @@
 export const config = {
   "dev": {
-    "username": process.env.POSTGRESS_USERNAME,
-    "password": process.env.POSTGRESS_PASSWORD,
-    "database": process.env.POSTGRESS_DB,
-    "host": process.env.POSTGRESS_HOST,
-    "dialect": "postgres",
-    "aws_reigion": process.env.AWS_REGION,
-    "aws_profile": process.env.AWS_PROFILE,
-    "aws_media_bucket": process.env.AWS_BUCKET,
-    "url": process.env.URL
+    "username": process.env.UDAGRAM_DEV_DB_USERNAME,
+    "password": process.env.UDAGRAM_DEV_DB_PASSWORD,
+    "database": process.env.UDAGRAM_DEV_DB_CATALOG,
+    "host": process.env.UDAGRAM_DEV_DB_HOST,
+    "dialect": process.env.UDAGRAM_DEV_DB_DIALECT,
+    "aws": {
+      "region": process.env.UDAGRAM_DEV_AWS_REGION,
+      "profile": process.env.UDAGRAM_DEV_AWS_PROFILE,
+      "media_bucket": process.env.UDAGRAM_DEV_AWS_MEDIA_BUCKET
+    },
+    "access_control_allow_origin": process.env.UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN
   },
   "prod": {
-    "username": "",
-    "password": "",
-    "database": "udagram_prod",
-    "host": "",
-    "dialect": "postgres"
-  },
+    "username": process.env.UDAGRAM_PROD_DB_USERNAME,
+    "password": process.env.UDAGRAM_PROD_DB_PASSWORD,
+    "database": process.env.UDAGRAM_PROD_DB_CATALOG,
+    "host": process.env.UDAGRAM_PROD_DB_HOST,
+    "dialect": process.env.UDAGRAM_PROD_DB_DIALECT,
+    "aws": {
+      "region": process.env.UDAGRAM_PROD_AWS_REGION,
+      "profile": process.env.UDAGRAM_PROD_AWS_PROFILE,
+      "media_bucket": process.env.UDAGRAM_PROD_AWS_MEDIA_BUCKET
+    },
+    "access_control_allow_origin": process.env.UDAGRAM_PROD_ACCESS_CONTROL_ALLOW_ORIGIN
+  }, 
   "jwt": {
-    "secret": process.env.JWT_SECRET
+    "secret": process.env.UDAGRAM_JWT_SECRET
   }
-
 }
