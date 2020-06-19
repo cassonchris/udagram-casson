@@ -1,43 +1,3 @@
-# language: node_js
-# node_js:
-#   - 13
-
-# branches:
-#   only:
-#     - master
-
-# services:
-#   - docker
-
-# # Pre-testing installs
-# install:
-#   - echo "nothing needs to be installed"
-
-# # Scripts to be run such as tests
-# before_script:
-#   - echo "no tests"
-
-# script:
-#   - docker --version # print the version for logging
-#   - docker build -t udagram-casson-api-feed udagram-casson-api-feed
-#   - docker tag udagram-casson-api-feed cassonchris/udagram-casson-api-feed:latest
-#   - docker build -t udagram-casson-api-user udagram-casson-api-user
-#   - docker tag udagram-casson-api-user cassonchris/udagram-casson-api-user:latest
-#   - docker build -t udagram-casson-reverse-proxy udagram-casson-reverse-proxy
-#   - docker tag udagram-casson-reverse-proxy cassonchris/udagram-casson-reverse-proxy:latest
-
-after_success:
-  - echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
-  - docker tag udagram-casson-api-feed cassonchris/udagram-casson-api-feed:latest
-  - docker tag udagram-casson-api-user cassonchris/udagram-casson-api-user:latest
-  - docker tag udagram-casson-frontend cassonchris/udagram-casson-frontend:latest
-  - docker tag udagram-casson-reverse-proxy cassonchris/udagram-casson-reverse-proxy:latest
-  - docker push cassonchris/udagram-casson-api-feed
-  - docker push cassonchris/udagram-casson-api-user
-  - docker push cassonchris/udagram-casson-frontend
-  - docker push cassonchris/udagram-casson-reverse-proxy
-
-
 language: minimal
 
 services: docker
@@ -55,7 +15,16 @@ before_install:
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
 
-
-
 install:
   - docker-compose -f docker/docker-compose-build.yaml build --parallel
+
+after_success:
+  - echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
+  - docker tag udagram-casson-api-feed cassonchris/udagram-casson-api-feed:latest
+  - docker tag udagram-casson-api-user cassonchris/udagram-casson-api-user:latest
+  - docker tag udagram-casson-frontend cassonchris/udagram-casson-frontend:latest
+  - docker tag udagram-casson-reverse-proxy cassonchris/udagram-casson-reverse-proxy:latest
+  - docker push cassonchris/udagram-casson-api-feed
+  - docker push cassonchris/udagram-casson-api-user
+  - docker push cassonchris/udagram-casson-frontend
+  - docker push cassonchris/udagram-casson-reverse-proxy
