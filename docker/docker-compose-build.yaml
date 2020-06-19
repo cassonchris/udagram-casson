@@ -15,5 +15,4 @@ services:
   frontend:
     build:
       context: ../udagram-casson-frontend 
-    image: cassonchris/udagram-casson-frontend:local
-    
+    image: cassonchris/udagram-casson-frontend

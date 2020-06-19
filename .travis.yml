@@ -1,33 +1,56 @@
-language: node_js
-node_js:
-  - 13
+# language: node_js
+# node_js:
+#   - 13
 
-branches:
-  only:
-    - master
+# branches:
+#   only:
+#     - master
 
-services:
-  - docker
+# services:
+#   - docker
 
-# Pre-testing installs
+# # Pre-testing installs
+# install:
+#   - echo "nothing needs to be installed"
+
+# # Scripts to be run such as tests
+# before_script:
+#   - echo "no tests"
+
+# script:
+#   - docker --version # print the version for logging
+#   - docker build -t udagram-casson-api-feed udagram-casson-api-feed
+#   - docker tag udagram-casson-api-feed cassonchris/udagram-casson-api-feed:latest
+#   - docker build -t udagram-casson-api-user udagram-casson-api-user
+#   - docker tag udagram-casson-api-user cassonchris/udagram-casson-api-user:latest
+#   - docker build -t udagram-casson-reverse-proxy udagram-casson-reverse-proxy
+#   - docker tag udagram-casson-reverse-proxy cassonchris/udagram-casson-reverse-proxy:latest
+
+# after_success:
+#   - echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
+#   - docker push cassonchris/udagram-casson-api-feed
+#   - docker push cassonchris/udagram-casson-api-user
+#   - docker push cassonchris/udagram-casson-reverse-proxy
+
+
+language: minimal
+
+services: docker
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.23.2
+
+before_install:
+  - docker -v && docker-compose -v
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
+
+
+
 install:
-  - echo "nothing needs to be installed"
-
-# Scripts to be run such as tests
-before_script:
-  - echo "no tests"
-
-script:
-  - docker --version # print the version for logging
-  - docker build -t udagram-casson-api-feed udagram-casson-api-feed
-  - docker tag udagram-casson-api-feed cassonchris/udagram-casson-api-feed:latest
-  - docker build -t udagram-casson-api-user udagram-casson-api-user
-  - docker tag udagram-casson-api-user cassonchris/udagram-casson-api-user:latest
-  - docker build -t udagram-casson-reverse-proxy udagram-casson-reverse-proxy
-  - docker tag udagram-casson-reverse-proxy cassonchris/udagram-casson-reverse-proxy:latest
-
-after_success:
-  - echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
-  - docker push cassonchris/udagram-casson-api-feed
-  - docker push cassonchris/udagram-casson-api-user
-  - docker push cassonchris/udagram-casson-reverse-proxy
+  - docker-compose -f docker/docker-compose-build.yaml build --parallel

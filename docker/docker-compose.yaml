@@ -37,6 +37,6 @@ services:
       UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN: $UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN
       URL: "http://localhost:8100"
   frontend:
-    image: cassonchris/udagram-casson-frontend:local
+    image: cassonchris/udagram-casson-frontend
     ports:
       - "8100:80"
