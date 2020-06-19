@@ -1,0 +1,42 @@
+version: "3"
+services:
+  reverseproxy:
+    image: cassonchris/udagram-casson-reverse-proxy
+    ports:
+        - 8080:8080
+    restart: always
+    depends_on:
+    - backend-user
+    - backend-feed     
+  backend-user:
+    image: cassonchris/udagram-casson-api-user
+    environment:
+      UDAGRAM_DEV_DB_USERNAME: $UDAGRAM_DEV_DB_USERNAME
+      UDAGRAM_DEV_DB_PASSWORD: $UDAGRAM_DEV_DB_PASSWORD 
+      UDAGRAM_DEV_DB_CATALOG: $UDAGRAM_DEV_DB_CATALOG 
+      UDAGRAM_DEV_DB_HOST: $UDAGRAM_DEV_DB_HOST 
+      UDAGRAM_DEV_AWS_REGION: $UDAGRAM_DEV_AWS_REGION 
+      UDAGRAM_DEV_AWS_PROFILE: $UDAGRAM_DEV_AWS_PROFILE 
+      UDAGRAM_DEV_AWS_MEDIA_BUCKET: $UDAGRAM_DEV_AWS_MEDIA_BUCKET
+      UDAGRAM_JWT_SECRET: $UDAGRAM_JWT_SECRET
+      UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN: $UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN
+      URL: "http://localhost:8100"
+  backend-feed:
+    image: cassonchris/udagram-casson-api-feed
+    volumes:
+      - $HOME/.aws:/root/.aws
+    environment:
+      UDAGRAM_DEV_DB_USERNAME: $UDAGRAM_DEV_DB_USERNAME
+      UDAGRAM_DEV_DB_PASSWORD: $UDAGRAM_DEV_DB_PASSWORD 
+      UDAGRAM_DEV_DB_CATALOG: $UDAGRAM_DEV_DB_CATALOG 
+      UDAGRAM_DEV_DB_HOST: $UDAGRAM_DEV_DB_HOST 
+      UDAGRAM_DEV_AWS_REGION: $UDAGRAM_DEV_AWS_REGION 
+      UDAGRAM_DEV_AWS_PROFILE: $UDAGRAM_DEV_AWS_PROFILE 
+      UDAGRAM_DEV_AWS_MEDIA_BUCKET: $UDAGRAM_DEV_AWS_MEDIA_BUCKET
+      UDAGRAM_JWT_SECRET: $UDAGRAM_JWT_SECRET
+      UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN: $UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN
+      URL: "http://localhost:8100"
+  frontend:
+    image: cassonchris/udagram-casson-frontend:local
+    ports:
+      - "8100:80"

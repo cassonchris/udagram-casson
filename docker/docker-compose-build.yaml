@@ -1,0 +1,19 @@
+version: "3"
+services:
+  reverseproxy:
+    build:
+      context: ../udagram-casson-reverse-proxy
+    image: cassonchris/udagram-casson-reverse-proxy 
+  backend_user:
+    build:
+      context: ../udagram-casson-api-user
+    image: cassonchris/udagram-casson-api-user
+  backend_feed:
+    build:
+      context: ../udagram-casson-api-feed  
+    image: cassonchris/udagram-casson-api-feed
+  frontend:
+    build:
+      context: ../udagram-casson-frontend 
+    image: cassonchris/udagram-casson-frontend:local
+    
