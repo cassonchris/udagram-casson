@@ -26,11 +26,16 @@
 #   - docker build -t udagram-casson-reverse-proxy udagram-casson-reverse-proxy
 #   - docker tag udagram-casson-reverse-proxy cassonchris/udagram-casson-reverse-proxy:latest
 
-# after_success:
-#   - echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
-#   - docker push cassonchris/udagram-casson-api-feed
-#   - docker push cassonchris/udagram-casson-api-user
-#   - docker push cassonchris/udagram-casson-reverse-proxy
+after_success:
+  - echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
+  - docker tag udagram-casson-api-feed cassonchris/udagram-casson-api-feed:latest
+  - docker tag udagram-casson-api-user cassonchris/udagram-casson-api-user:latest
+  - docker tag udagram-casson-frontend cassonchris/udagram-casson-frontend:latest
+  - docker tag udagram-casson-reverse-proxy cassonchris/udagram-casson-reverse-proxy:latest
+  - docker push cassonchris/udagram-casson-api-feed
+  - docker push cassonchris/udagram-casson-api-user
+  - docker push cassonchris/udagram-casson-frontend
+  - docker push cassonchris/udagram-casson-reverse-proxy
 
 
 language: minimal
