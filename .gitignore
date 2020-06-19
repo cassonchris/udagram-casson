@@ -42,5 +42,6 @@ venv/
 !.elasticbeanstalk/*.global.yml
 
 # kubernetes
-deployments/secrets-dev.yaml
-deployments/aws-secret.yaml
+k8s/secrets-dev.yaml
+k8s/aws-secret.yaml
+k8s/configmap-dev.yaml

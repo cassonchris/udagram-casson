@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-casson-api-user
+  labels:
+    app: udagram-casson-api-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udagram-casson-api-user
+  template:
+    metadata:
+      labels:
+        app: udagram-casson-api-user
+    spec:
+      containers:
+      - name: udagram-casson-api-user
+        image: cassonchris/udagram-casson-api-user
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always  
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"                  
+        env:
+        - name: UDAGRAM_DEV_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-secrets
+              key: UDAGRAM_DEV_DB_USERNAME 
+        - name: UDAGRAM_DEV_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secrets
+              key: UDAGRAM_DEV_DB_PASSWORD
+        - name: UDAGRAM_DEV_DB_CATALOG
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DEV_DB_CATALOG
+        - name: UDAGRAM_DEV_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DEV_DB_HOST 
+        - name: UDAGRAM_DEV_DB_DIALECT
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DEV_DB_DIALECT 
+        - name: UDAGRAM_DEV_AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DEV_AWS_REGION
+        - name: UDAGRAM_DEV_AWS_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DEV_AWS_PROFILE
+        - name: UDAGRAM_DEV_AWS_MEDIA_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DEV_AWS_MEDIA_BUCKET
+        - name: UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_DEV_ACCESS_CONTROL_ALLOW_ORIGIN
+        - name: UDAGRAM_JWT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: UDAGRAM_JWT_SECRET    
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true        
+      restartPolicy: Always
+      volumes:
+      - name: aws-secret
+        secret:
+          secretName: aws-secret 

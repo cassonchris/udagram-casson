@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: udagram-casson-dev
+  name: udagram-casson-api-user
   labels:
-    run: udagram-casson-dev
+    app: udagram-casson-api-user
 spec:
   ports:
   - port: 8080
     protocol: TCP
   selector:
-    run: udagram-casson-dev
+    app: udagram-casson-api-user

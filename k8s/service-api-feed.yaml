@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: udagram-casson-api-feed
+  labels:
+    app: udagram-casson-api-feed
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: udagram-casson-api-feed
