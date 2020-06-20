@@ -1,16 +1,15 @@
 # Udagram Casson ![Travis build status](https://travis-ci.com/cassonchris/udagram-casson.svg?branch=master "Travis build status")
-___
 
 ## Build Locally
-___
+
 `docker-compose -f docker/docker-compose-build.yaml build --parallel`
 
 ## Run Locally
-___
+
 `docker-compose up`
 
 ## Deploy to Kubernetes
-___
+
 1. Apply aws-secret `kubectl apply -f k8s/aws-secret.yaml`
 2. Apply secrets-dev `kubectl apply -f k8s/secrets-dev.yaml`
 3. Apply configmap-dev `kubectl apply -f k8s/configmap-dev.yaml`
